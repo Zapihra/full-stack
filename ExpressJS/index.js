@@ -1,21 +1,23 @@
 const express = require('express');
 const path = require('path');
-const moment = require('moment');
+const logger = require('./middleware/logger');
 const members = require('./Members');
 
 const app = express();
 
-const logger = (req, res, next) => {
-    console.log(`${req.protocol}://${req.get('host')}${
-        req.originalUrl}:${moment().format()}`);
-    next();
-}
+
 
 //init middleware
-app.use(logger)
+//app.use(logger)
 
 //gets all members
 app.get('/api/members', (req, res) => res.json(members));
+
+//gets single member
+app.get('/api/members/:id', (req, res) =>{
+    //res.send(req.params.id);
+    res.json(members.filter(member => member.id === parseInt(req.params.id)));
+});
 
 //set static folder
 app.use(express.static(path.join(__dirname, 'public')));
