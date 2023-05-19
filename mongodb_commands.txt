@@ -1,0 +1,69 @@
+use acme
+db
+db.createCollection('posts')
+show collections
+db.posts.insertOne({title: 'post one',
+    body: 'body of post one', category: 'news',
+    likes: 4, tags: ['news', 'events'],
+    user: {name: 'john doe', status: 'author'}
+    date: Date()})
+db.posts.insertMany([
+    {title: 'post two',
+    body: 'body of post two', category: 'technology',
+    date: Date()},
+    {title: 'post three',
+    body: 'body of post three', category: 'news',
+    date: Date()},
+    {title: 'post four',
+    body: 'body of post four', category: 'entertainment',
+    date: Date()}
+])
+
+db.posts.find()
+db.posts.find().pretty()
+db.posts.find(category: 'news')
+db.posts.find().sort(title: 1).pretty()
+db.posts.find(category: 'news').count()
+db.posts.find().limit(2)
+db.posts.find().forEach(function(doc) {print('blog post: '+doc.title)})
+db.posts.findOne(category: 'news')
+
+db.posts.updateOne({
+    {title: 'post two'},
+    {$set: {title: 'post two', body: 'new post 2 body',
+    date: Date()}},
+    {upsert:true}
+})
+db.posts.updateOne({
+    {title: 'post two'},
+    {$set: {category: 'technology', body: 'body of post 2',
+    date: Date()}},
+    {upsert:true}
+})
+db.posts.updateOne({title: 'post one'}, {$inc: {likes: 2}})
+db.posts.updateOne({title: 'post one'}, {$rename: {likes: views}})
+
+db.posts.remove({title: 'post four'})
+db.posts.updateOne(
+    {title: 'post one'},
+    {$set: { comments: [
+        {user: 'mary williams', body: 'comment one',
+            date: Date()},
+        {user: 'harry white', body: 'comment two',
+            date: Date()}
+    ]
+    }}
+)
+
+db.post.find({
+    comments: { $elemMatch: {user: 'mary williams}}
+})
+
+db.posts.createIndex({title: 'text'})
+db.posts.find({$text: {search: "\"post o\""}})
+
+db.posts.updateOne({
+    title: 'post two'}, {$set: {views 10}})
+db.posts.find({views: {$gt: 6}})
+db.posts.find({views: {$gte: 6}})
+
