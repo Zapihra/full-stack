@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const expVal = require('express-validator');
+const exphbs = require('express-handlebars');
 const logger = require('./middleware/logger');
 
 const app = express();
@@ -8,7 +8,10 @@ const app = express();
 //init middleware
 //app.use(logger)
 
-app.use(expVal());
+// handlebars middleware
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set('views', './views');
 
 //homepage route
 app.get('/', (req,res) => res.render('index'))
