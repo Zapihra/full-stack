@@ -54,5 +54,9 @@ app.use('/users', users);
 //index route
 app.get('/', (req,res) => {res.send('Invalid endpoint')});
 
+app.get('*', (req,res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
 //start server
 app.listen(port, () => console.log('server started on port ' + port));
