@@ -45,3 +45,10 @@ module.exports.addUser = function(newUser, callback) {
         });
     });
 };
+
+module.exports.comparePassword = function(candPassword, hash, callback) {
+    bcrypt.compare(candPassword, hash, (err, isMatch) => {
+        if (err) throw err;
+        callback(null, isMatch);
+    });
+};
