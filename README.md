@@ -6,9 +6,9 @@ For each of the folders download them and go to the base folder and write to the
 `npm install`
 which will download the dependecies
 to run the code write 
-`npm start`
+`npm run start`
 or for the developer mode
-`npm dev`
+`npm run dev`
 
 
 - for NodeJS file see that you have node 12 in use
